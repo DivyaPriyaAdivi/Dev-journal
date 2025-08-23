@@ -39,7 +39,8 @@
   </div>
 
 </article>
-<article class="media content-section">
+<div class="col-md-4">
+  <article class="content-section">
    <h3 class="mt-4">Related Articles</h3>  
   {% for article in post.articles.all %}
     <div class="timeline">
@@ -57,4 +58,7 @@
     <p>No articles added yet.</p>
   {% endfor %}
 </article>
+
+</div>
+
 {% endblock content %}
