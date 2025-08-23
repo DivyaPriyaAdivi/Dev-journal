@@ -1,38 +1,69 @@
 {% extends "blog/base.html" %}
 {% block content %}
-	{% for post in posts %}
-		<article class="media content-section">
-      <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-      <small class="text-muted">{{ post.date_posted|date:'F d, Y' }}</small>
+
+  {% if not user.is_authenticated %}
+    <!-- Guest View -->
+    <div class="jumbotron text-center bg-light p-5 rounded">
+      <h1 class="display-4">Welcome to Error Journal 📔</h1>
+      <p class="lead">Your personal developer diary powered by a VS Code extension.  
+      Keep track of the errors you face, log solutions, and build your own knowledge base.</p>
+      <hr class="my-4">
+      <p>Get started by creating an account.</p>
+      <a class="btn btn-primary btn-lg" href="{% url 'register' %}">Join Now</a>
+      <a class="btn btn-outline-secondary btn-lg" href="{% url 'login' %}">Login</a>
     </div>
-    <h2><a class="article-title" href="{% url 'posts-detail' post.id %}">{{ post.title }}</a></h2>
-    <p class="article-content">{{ post.content }}</p>
-  </div>
-</article>
-	{% endfor %}
-  {% if is_paginated %}
 
-      {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-      {% endif %}
+  {% elif user.is_authenticated and posts.count == 0 %}
+    <!-- Logged in but no posts -->
+    <div class="jumbotron text-center bg-light p-5 rounded">
+      <h1 class="display-4">Hello {{ user.username }} 👋</h1>
+      <p class="lead">Looks like your journal is empty.</p>
+      <p>Start by logging your first error and its fix —  
+      your journey begins here 🚀</p>
+      <a class="btn btn-success btn-lg" href="{% url 'posts-create' %}">+ Make Your First Error Log</a>
+    </div>
 
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-      {% endfor %}
+  {% else %}
+    <!-- Logged in + has posts -->
+    <h2 class="mb-4">{{ user.username }}’s Error Journal</h2>
+    {% for post in posts %}
+      <article class="media content-section mb-4 p-3 border rounded shadow-sm">
+        <div class="media-body">
+          <div class="article-metadata mb-2">
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+          </div>
+          <h4><a class="article-title text-dark" href="{% url 'posts-detail' post.id %}">{{ post.title }}</a></h4>
+          <p class="article-content">{{ post.content|truncatewords:30 }}</p>
+        </div>
+      </article>
+    {% empty %}
+      <p class="text-muted">No entries yet.</p>
+    {% endfor %}
 
-      {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-      {% endif %}
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <nav>
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+          {% endif %}
 
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+          {% endif %}
+        </ul>
+      </nav>
     {% endif %}
-{% endblock content %}
+  {% endif %}
 
+{% endblock content %}

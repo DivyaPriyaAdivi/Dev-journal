@@ -5,7 +5,9 @@ from .views import (
     PostCreateView,
     PostUpdateView,
     PostDeleteView,
-    UserPostListView
+    UserPostListView,
+    add_article,
+    set_active_post
     )
 from . import views
 
@@ -17,4 +19,6 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(),name='posts-create'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(),name='posts-delete'),
     path('about/',views.about,name='about-blog'),
+    path('api/add-article/', views.add_article, name='add-article'),
+    path('post/<int:pk>/set-active-post/', views.set_active_post, name='set-active-post')
 ]

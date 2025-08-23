@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  {% if success %}
+    <div class="alert alert-success">
+      Your account has been successfully activated! You can now <a href="{% url 'login' %}">log in</a>.
+    </div>
+  {% else %}
+    <div class="alert alert-danger">
+      Activation link is invalid or has expired.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

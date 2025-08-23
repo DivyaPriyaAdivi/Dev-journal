@@ -1,0 +1,60 @@
+{% extends "blog/base.html" %}
+{% block content %}
+	<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{object.author.profile.image.url}}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+      <small class="text-muted">{{ object.date_posted|date:'F d, Y' }}</small>
+      {% if object.author == user%}
+        <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'posts-update' object.id %}">Update </a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'posts-delete' object.id %}">Delete </a>
+        </div>
+      {% endif %}
+    </div>
+    <h2 class="article-title">{{ object.title }}</h2>
+    <p class="article-content">{{ object.content }}</p>
+     
+
+</div>
+{% if user.is_authenticated and post.author == user %}
+  <form method="post" action="{% url 'set-active-post' post.id %}" id="active-post-form">
+    {% csrf_token %}
+    <div class="custom-control custom-switch">
+      <input 
+        type="checkbox" 
+        class="custom-control-input" 
+        id="activeSwitch" 
+        name="is_active"
+        onchange="document.getElementById('active-post-form').submit();"
+        {% if post.is_active %}checked{% endif %}
+      >
+      <label class="custom-control-label" for="activeSwitch">
+        Set as Active
+      </label>
+    </div>
+  </form>
+{% endif %}
+  </div>
+
+</article>
+<article class="media content-section">
+   <h3 class="mt-4">Related Articles</h3>  
+  {% for article in post.articles.all %}
+    <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <span class="time">{{ article.added_on|date:"F d, Y H:i" }}</span>
+        <h5><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h5>
+        {% if article.note %}
+          <p>{{ article.note }}</p>
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <p>No articles added yet.</p>
+  {% endfor %}
+</article>
+{% endblock content %}

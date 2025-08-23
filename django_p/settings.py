@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'django_p.urls'
@@ -70,6 +74,7 @@ TEMPLATES = [
             ],
         },
     },
+    
 ]
 
 WSGI_APPLICATION = 'django_p.wsgi.application'
@@ -145,6 +150,17 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "divyapriyaaaaa@gmail.com"  # Replace with your email
-EMAIL_HOST_PASSWORD = "hhro kcti bism xmch"  # Use an App Password if using Gmail
+EMAIL_HOST_USER = "fill with email"  
+EMAIL_HOST_PASSWORD = ""  
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+         'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
