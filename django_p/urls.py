@@ -20,11 +20,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path,include
 from users import views as user_views
+from users.forms import CustomLoginForm
+from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from blog.views import PostCreateAPI
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('blog.urls')),
     path('register/',user_views.register,name='register'),
-    path('login/',auth_views.LoginView.as_view(template_name='users/login.html'),name='login'),
+    path('login/',auth_views.LoginView.as_view(template_name='users/login.html',authentication_form=CustomLoginForm),name='login'),
+    path('activate/<uid>/<token>/', user_views.activate, name='activate'),
     path('logout/',user_views.logout_view,name='logout'),
     path('profile/',user_views.profile,name='profile'),
     path('password_reset/done',
@@ -35,13 +42,18 @@ urlpatterns = [
         name='password_reset'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_confirm.html'), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
-
-
-
-
-
-
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/posts/create/', PostCreateAPI.as_view(), name='post-create'),
+    path('api/login/',user_views.login_view,name="api-login"),
 ]
+
+
+
+
+
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
