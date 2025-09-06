@@ -32,7 +32,7 @@ def login_view(request):
     else:
         return Response({"error": "Invalid Credentials"}, status=400)
 
-# Create your views here.
+
 def register(request):
 	if request.method =='POST':
 		form = UserRegisterForm(request.POST)
