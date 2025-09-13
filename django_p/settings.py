@@ -87,13 +87,7 @@ WSGI_APPLICATION = 'django_p.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://divi:HUzArW1mHDzBSbzOBMAP5ohCU77vCK7A@dpg-d2u0qfer433s73dreffg-a/devjournal',
-        conn_max_age=600
-    )
-}
+DATABASES = os.getenv("DATABASE_URI")
 
 
 
