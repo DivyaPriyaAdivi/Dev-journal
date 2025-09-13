@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
 
+load_dotenv() 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +29,7 @@ SECRET_KEY = 'django-insecure-x*l(he)u2gyfl)f01lz@lcok-&jvq^)3&z$1^r%cr93d*wo4ii
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dev-journal-vzt3.onrender.com']
+ALLOWED_HOSTS = ['dev-journal-vzt3.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -87,9 +89,7 @@ WSGI_APPLICATION = 'django_p.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL")  # Render provides DATABASE_URL in env
-    )
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 
