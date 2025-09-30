@@ -1,32 +1,36 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
+{% load tailwind_filters %}
 {% block content %}
-	<div class="content-section">
-		<form method="POST">
+	<div class="mx-auto w-full max-w-xl px-6 py-10">
+		<div class="rounded-2xl border border-gray-200/80 bg-white shadow-sm px-8 py-10">
+		<form method="POST" class="space-y-6">
 			{% csrf_token %}
-			<fieldset class="form-group">
-				<legend class= "bottom-border mb-4"> login</legend>
-				{{ form|crispy}}
-			</fieldset>
-			<div class="form-group">
-				<button class="btn btn-outline-info" type="submit">login</button>
-				<div>
-					<small class="text-muted">
-				<a class="ml-2" href="{% url 'password_reset' %}">forgot your password? </a>
-				</div>
-				
-			</small>
-				
+			<div>
+        	<h1 class="text-2xl font-bold tracking-tight text-gray-900">login</h1>
 			</div>
+				{{ form|crispy}}
 			
+			 <div class="pt-2">
+        <button type="submit"
+                class="inline-flex w-full items-center justify-center rounded-md bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/60 focus-visible:ring-offset-2">
+          login
+        </button>
+      </div>
+	  	<a href="{% url 'password_reset' %}" class="ml-1 font-medium text-gray-900 underline underline-offset-4 hover:no-underline">
+          forget your password?
+        </a>
 		</form>
-		<div class="border-top pt-3">
-			<small class="text-muted">
-				Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign up </a>
-			</small>
-		</div>
-
-
+		
+			 <div class="mt-6 border-t pt-4">
+      <p class="text-sm text-gray-600">
+        Need An Account?
+        <a href="{% url 'register' %}" class="ml-1 font-medium text-gray-900 underline underline-offset-4 hover:no-underline">
+          Sign up
+        </a>
+      </p>
+    </div>
+	</div>
 	</div>
 
 {% endblock content %}

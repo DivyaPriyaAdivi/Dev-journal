@@ -1,64 +1,123 @@
 {% extends "blog/base.html" %}
 {% block content %}
-	<article class="media content-section">
-    <img class="rounded-circle article-img" src="{{object.author.profile.image.url}}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
-      <small class="text-muted">{{ object.date_posted|date:'F d, Y' }}</small>
-      {% if object.author == user%}
-        <div>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'posts-update' object.id %}">Update </a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'posts-delete' object.id %}">Delete </a>
+
+{% with post=post|default:object %}
+
+<section class="max-w-7xl mx-auto px-4 md:px-6 py-6">
+  <!-- Card shell -->
+  <article class=" rounded-lg overflow-hidden">
+    <!-- Title row + actions -->
+    <header class="p-5">
+      <div class="flex items-start justify-between gap-4">
+        <!-- Left: title + date -->
+        <div class="min-w-0">
+          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-none text-gray-900 ">
+            {{ post.title }}
+          </h1>
+           <div class="mt-3">
+              <time datetime="{{ post.date_posted|date:'c' }}"
+                class="block t text-gray-500 mt-1">
+            {{ post.date_posted|date:"F d, Y" }}
+          </time>
+           </div>
+          
         </div>
-      {% endif %}
-    </div>
-    <h2 class="article-title">{{ object.title }}</h2>
-    <p class="article-content">{{ object.content }}</p>
-     
 
-</div>
-{% if user.is_authenticated and post.author == user %}
-  <form method="post" action="{% url 'set-active-post' post.id %}" id="active-post-form">
-    {% csrf_token %}
-    <div class="custom-control custom-switch">
-      <input 
-        type="checkbox" 
-        class="custom-control-input" 
-        id="activeSwitch" 
-        name="is_active"
-        onchange="document.getElementById('active-post-form').submit();"
-        {% if post.is_active %}checked{% endif %}
-      >
-      <label class="custom-control-label" for="activeSwitch">
-        Set as Active
-      </label>
-    </div>
-  </form>
-{% endif %}
-  </div>
-
-</article>
-<div class="col-md-4">
-  <article class="content-section">
-   <h3 class="mt-4">Related Articles</h3>  
-  {% for article in post.articles.all %}
-    <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <span class="time">{{ article.added_on|date:"F d, Y H:i" }}</span>
-        <h5><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h5>
-        {% if article.note %}
-          <p>{{ article.note }}</p>
+        <!-- Right: actions -->
+         {% if object.author == user%}
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="{% url 'posts-update' post.id %}"
+             class="inline-flex items-center gap-2 px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M16.862 3.487a2.25 2.25 0 013.182 3.182L8.25 18.563 4.5 19.5l.938-3.75L16.862 3.487z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 7.5L16.5 4.5"/>
+            </svg>
+            <span>Edit</span>
+          </a>
+          <a href="{% url 'posts-delete' post.id %}"
+             class="inline-flex items-center gap-2 px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M6 7.5h12M9.75 7.5V6.75A1.5 1.5 0 0111.25 5.25h1.5A1.5 1.5 0 0114.25 6.75V7.5m-6 0l.75 11.25A1.5 1.5 0 0010.5 20.25h3A1.5 1.5 0 0015.75 18.75L16.5 7.5"/>
+            </svg>
+            <span>Delete</span>
+          </a>
+        </div>
         {% endif %}
-      </div>
+      </div>                                                     
+    </header>
+
+   
+  
+ <!-- Body: content (left) + timeline (right) -->
+
+<!-- Body: content (left) + timeline (right) -->
+<div class="border-t border-gray-200 px-5 py-5">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-[1fr_20rem]">
+    <!-- Left: post content -->
+    <div class="prose max-w-none text-gray-800">
+      {{ post.content }}
     </div>
-  {% empty %}
-    <p>No articles added yet.</p>
-  {% endfor %}
+    <!-- Right: timeline rail -->
+    <aside class="md:sticky md:top-24 h-max border border-gray-200 rounded-lg p-4">
+      {% if user.is_authenticated and post.author == user %}
+<form method="post" action="{% url 'set-active-post' post.id %}" id="active-post-form" class="inline-block">
+  {% csrf_token %}
+  <h3 class="text-sm font-medium text-gray-900 mb-3">Toggle on the switch to clip related articles</h3>
+  <label for="activeSwitch"
+         class="relative inline-flex items-center cursor-pointer"
+         role="switch"
+         aria-checked="{% if post.is_active %}true{% else %}false{% endif %}">
+    <!-- Hidden checkbox is the real control -->
+    <input
+      id="activeSwitch"
+      name="is_active"
+      type="checkbox"
+      class="sr-only peer"
+      {% if post.is_active %}checked{% endif %}
+      onchange="document.getElementById('active-post-form').submit();"
+    >
+
+    <!-- Track + Thumb (monochrome) -->
+    <span class="w-11 h-6 rounded-full bg-gray-200 transition peer-checked:bg-gray-900
+                 after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition
+                 peer-checked:after:translate-x-5"></span>
+
+    <span class="ml-2 text-sm text-gray-700 select-none">Set as Active</span>
+  </label>
+</form>
+{% endif %}
+      <h3 class="text-sm font-medium text-gray-900 mb-3">Related articles</h3>
+      <ol class="relative border-s border-gray-200 ms-3">
+        {% for article in post.articles.all %}
+          <li class="mb-6 ms-4">
+            <span class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-indigo-600"></span>
+            <a href="{{ article.url }}" target="_blank"
+               class="text-sm font-medium text-gray-900 hover:underline ">{{ article.title }}</a>
+            <time datetime="{{ article.added_on|date:'c' }}" class="block text-xs text-gray-500 mt-1">
+              {{ article.added_on|date:"F d, Y · H:i" }}
+            </time>
+            {% if article.note %}
+              <p class="text-sm text-gray-600 mt-2">{{ article.note }}</p>
+            {% endif %}
+          </li>
+        {% empty %}
+          <li class="ms-4 text-sm text-gray-500">No related articles yet.</li>
+        {% endfor %}
+      </ol>
+    </aside>
+    
+  </div>
+</div>
 </article>
 
-</div>
 
+      
+</section>
+
+{% endwith %}
 {% endblock content %}
+
+
