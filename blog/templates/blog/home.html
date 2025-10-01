@@ -18,9 +18,22 @@
     </div>
     <h1 class=" text-5xl font-extrabold leading-tight tracking-tight text-gray-900 md:text-6xl lg:text-7xl">Dev Journal</h1>
     <h2 class="text-xl text-gray-600">Document your coding progress & overcome challenges with ease.</h2>
-    <a href="{% url 'register' %}" class="mt-4 max-w-max bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition">
+   
+    <div class="mt-6 flex items-center gap-3">
+     
+       <a href="{% url 'register' %}" class=" max-w-max bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition">
       Get Started
     </a>
+  <a href="{% url 'login' %}"
+     class="inline-flex items-center gap-2 rounded-md border border-black bg-white text-gray-900 px-5 py-3 hover:bg-gray-50">
+    Log in
+  </a>
+    </div>
+    
+    
+  </div>
+  
+
   </div>
 </section>
    <section class="bg-white">
@@ -60,35 +73,45 @@
 
   {% elif user.is_authenticated and posts.count == 0 %}
     <!-- Logged in but no posts -->
-    <div class="jumbotron text-center bg-light p-5 rounded">
-      <h1 class="display-4">Hello {{ user.username }} 👋</h1>
-      <p class="lead">Looks like your journal is empty.</p>
-      <p>Start by logging your first error and its fix —  
-      your journey begins here 🚀</p>
-      <a class="btn btn-success btn-lg" href="{% url 'posts-create' %}">+ Make Your First Error Log</a>
-    </div>
+    <section class="max-w-7xl mx-auto px-4 md:px-6 py-10">
+      <div class="rounded-xl bg-white p-8 text-center">
+        <h1 class="text-2xl font-semibold text-gray-900">
+          Hello {{ user.username }} 👋
+        </h1>
+        <p class="mt-2 text-gray-600">
+          Looks like the journal is empty. Start the first entry or clip with the browser extension.
+        </p>
+
+        <div class="mt-6 flex items-center justify-center gap-3">
+          <a href="{% url 'posts-create' %}"
+             class="inline-flex items-center gap-2 rounded-md bg-gray-900 text-white px-5 py-3 hover:bg-gray-800">
+            <!-- plus icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            <span>Create post</span>
+          </a>
+
+          <a  href="https://addons.mozilla.org/en-US/firefox/addon/dev-journal-clipper/" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 rounded-md border border-black bg-white text-gray-900 px-5 py-3 hover:bg-gray-50">
+            <!-- puzzle icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M9 4.5a2.5 2.5 0 115 0V6h1.5A2.5 2.5 0 0118 8.5V10h1.5a2.5 2.5 0 010 5H18v1.5A2.5 2.5 0 0115.5 19H14v1.5a2.5 2.5 0 01-5 0V19H7.5A2.5 2.5 0 015 16.5V15H3.5a2.5 2.5 0 010-5H5V8.5A2.5 2.5 0 017.5 6H9V4.5z"/>
+            </svg>
+            <span>Open extension</span>
+          </a>
+        </div>
+
+        <!-- Optional tip -->
+      </div>
+    </section>
+
+    
 
   {% else %}
     <!-- Logged in + has posts -->
-     <aside class=" fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto bg-white border-r border-gray-200">
-    <!-- Brand / header -->
- 
-
-    <!-- Nav -->
-    <nav class="p-3 ml-12" role="navigation" aria-label="Sidebar">
-      <a href="" class="block px-3 py-2 rounded-md hover:bg-gray-50">Home</a>
-      <a href="" class="block px-3 py-2 rounded-md hover:bg-gray-50">Profile</a>
-      <a href="" class="block px-3 py-2 rounded-md hover:bg-gray-50">About</a>
-
-      <!-- Logout as a form (recommended) -->
-      <form method="post" action="">
-        {% csrf_token %}
-        <button type="submit" class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50">
-          Logout
-        </button>
-      </form>
-    </nav>
-  </aside>
 
   <section class="max-w-7xl mx-auto p-6">
   <header class="mb-6">

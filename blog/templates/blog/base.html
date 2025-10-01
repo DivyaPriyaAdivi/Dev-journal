@@ -40,9 +40,8 @@
   </aside>
   {% endif %}
 
-  <!-- Main content: always clear header, shift only at md when sidebar exists -->
+
   <main role="main" class="pt-16 {% if user.is_authenticated %}md:ml-64{% endif %} flex-grow">
-    <!-- Flash messages -->
     {% if messages %}
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 space-y-3">
         {% for message in messages %}

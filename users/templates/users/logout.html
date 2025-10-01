@@ -1,11 +1,15 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<h2>you have been logged out</h2>
-<div class="border-top pt-3">
-	<small class="text-muted">
-		 <a  href="{% url 'login' %}">Log in again </a>
-	</small>
-</div>
-    
+<section class="max-w-sm mx-auto px-4 md:px-6 pt-24">
+  <article class="border border-gray-200 rounded-lg bg-white p-6 text-center">
+    <h2 class="text-lg font-semibold text-gray-900">You have been logged out</h2>
 
+    <div class="mt-4 pt-3 border-t border-gray-200">
+      <a href="{% url 'login' %}"
+         class="inline-flex items-center text-indigo-600 hover:underline">
+        Log in again
+      </a>
+    </div>
+  </article>
+</section>
 {% endblock content %}
