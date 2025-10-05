@@ -29,7 +29,7 @@ Website url: https://dev-journal-vzt3.onrender.com/
 ## Features
 
 - clipper extension which saves articles on the post which they set active to search for their solutions to their bugs
-- before vs after code comparison: you can add the block of the code which caused erro vs the resolved. you can able to highlight them [upcomming featue]
+- before vs after code comparison: you can add the block of the code which caused error vs the resolved block of code. you can able to highlight them [upcomming featue]
 - The canva where you can doodle your thoughts about code and you can draw flow of code [upcomming feature]
 
 
