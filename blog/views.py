@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, RedirectView
 from .models import Post, ArticleReference
 from rest_framework import generics, permissions
 from .serializers import PostSerializer
@@ -22,15 +22,18 @@ def home(request):
 
 
 class PostListView(ListView):
-	model = Post
-	template_name = 'blog/home.html'
-	context_object_name = 'posts'     #<app>/<model>_<viewtype>.html
-	ordering = ['-date_posted']
-	paginated_by =10
-	
+    model = Post
+    template_name = "blog/home.html"
+    context_object_name = "posts"
+    ordering = ["-date_posted"]
+    paginate_by = 10  
 
-	def get_queryset(self):
-		return Post.objects.filter(author=self.request.user).order_by("-date_posted")
+    def get_queryset(self):
+        qs = Post.objects.order_by("-date_posted")
+        if self.request.user.is_authenticated:
+            return qs.filter(author=self.request.user)
+        return qs.none()  
+
 
 
 class PostDetailView(DetailView):
