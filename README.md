@@ -12,9 +12,9 @@ Dev Journal is a personalized Blog app that helps Developers and programmers doc
 
 ## Tech Stack
 
-**Client:** Html,Tailwind CSS
+**Client:** Html,Tailwind CSS,Javascript
 
-**Server:** Django, postgreSQL, Javascript, render
+**Server:** Django, postgreSQL, render
 
 
 
