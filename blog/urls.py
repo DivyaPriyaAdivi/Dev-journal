@@ -6,7 +6,10 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
     add_article,
-    set_active_post
+    set_active_post,
+    canva_view,
+    save_canva,
+    get_canva,
     )
 from . import views
 
@@ -18,5 +21,9 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(),name='posts-delete'),
     path('about/',views.about,name='about-blog'),
     path('api/add-article/', views.add_article, name='add-article'),
-    path('post/<int:pk>/set-active-post/', views.set_active_post, name='set-active-post')
+    path('post/<int:pk>/set-active-post/', views.set_active_post, name='set-active-post'),
+    path('post/<int:pk>/canva/', views.canva_view, name='canva-view'),
+    path('api/post/<int:pk>/save-canva/', views.save_canva, name='save-canva'),
+    path('api/post/<int:pk>/get-canva/', views.get_canva, name='get-canva'),
+   
 ]

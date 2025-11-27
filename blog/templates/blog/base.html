@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Tailwind Play CDN (dev) with Typography plugin for `prose` -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.0/fabric.min.js"></script>
   {% if title %}<title>Dev Journal - {{ title }}</title>{% else %}<title>Dev Journal</title>{% endif %}
 </head>
 <body class="bg-white text-black min-h-screen flex flex-col">
@@ -22,7 +22,6 @@
   </header>
 
   {% if user.is_authenticated %}
-  <!-- Sidebar: hidden on mobile, fixed at md+ -->
   <aside class="hidden md:block fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto bg-white border-r border-gray-200">
     <nav class="p-3" role="navigation" aria-label="Sidebar">
       <a href="{% url 'Blog-home' %}" class="block px-3 py-2 rounded-md hover:bg-gray-50">Home</a>

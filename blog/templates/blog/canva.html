@@ -1,0 +1,118 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% csrf_token %}
+<div>
+  <div class="mt-4 flex justify-center items-center">
+    <canvas id="demoCanvas" class=" mt-4  border border-solid border-grey-600 ">
+    </canvas>
+  </div>
+  <div class="mt-8 flex justify-center items-center gap-3">
+    <button onclick="toggleDraw()" class="px-3 py-2 rounded border border-black bg-black text-white ">doodle </button>
+    <button onclick="createTextbox()" class="px-3 py-2 rounded border border-black bg-black text-white">Text Box</button>
+    <button onclick="deleteObject()" class="px-3 py-2 rounded border border-black bg-black text-white" >Delete </button>
+    <button id="saveButton" onclick="saveCanvasState()" class="px-3 py-2 rounded border border-black bg-black text-white">Save</button>
+  </div>
+</div>
+<script>
+  const postId = "{{ post.id }}"; 
+  const myCanvas = new fabric.Canvas("demoCanvas", {
+    width: window.innerWidth - 200,
+    height: window.innerHeight - 100,
+    backgroundColor: "white",
+    isDrawingMode: false,
+
+  });
+  myCanvas.setDimensions({ width: 1500, height: 700 }) 
+
+  const toggleDraw = () => {
+    myCanvas.set({ isDrawingMode: !myCanvas.get("isDrawingMode") });
+  };
+
+  const createTextbox = () => {
+    const textbox = new fabric.Textbox("write your text here", {
+      width: 400,
+      fontSize: 20,
+    });
+    myCanvas.add(textbox);
+  };
+
+  const deleteObject = () => {
+    if (myCanvas.getActiveObject()) {
+      myCanvas.remove(myCanvas.getActiveObject());
+    }
+  };
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+  const csrftoken = getCookie("csrftoken");
+
+  async function saveCanvasState() {
+    const  canva = myCanvas.toJSON();
+    
+
+    try {
+      const response = await fetch(`/api/post/${postId}/save-canva/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        credentials: "include",
+        body: JSON.stringify({ canva }),
+        
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Save failed:", data);
+        alert("Error saving canvas!");
+        return;
+      }
+      console.log("Canvas saved:", data);
+      alert("Canvas saved successfully!");
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong!");
+    }
+  }
+
+  async function loadCanvasState() {
+    try {
+      const response = await fetch(`/api/post/${postId}/get-canva/`,{
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        credentials: "include",
+ 
+});
+;
+      const data = await response.json();
+      if (data.canva) {
+        myCanvas.loadFromJSON(data.canva, function() {
+          myCanvas.renderAll();
+          console.log("Canvas loaded for this post!");
+        });
+      } else {
+        console.log("No canva's data saved yet for this post.");
+      }
+    } catch (err) {
+      console.error("Error loading canvas:", err);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", loadCanvasState);
+</script>
+{% endblock content %}
