@@ -30,9 +30,9 @@ class ProfileUpdateForm(forms.ModelForm):
 		fields = ['image']
 
 class CustomLoginForm(AuthenticationForm):
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
-            raise ValidationError(
-                "Your account is inactive. Please check your email to verify your account.",
-                code='inactive'
-            )
+	def confirm_login_allowed(self, user):
+		if not user.is_active:
+			raise ValidationError(
+				"Your account is inactive. Please check your email to verify your account.",
+				code='inactive'
+			)
