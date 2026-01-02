@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from django.conf import settings
 
 
 @api_view(['POST'])
@@ -50,7 +51,7 @@ def register(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
-            send_mail(subject, message, 'your email', [user.email])
+            send_mail(subject, message,settings.DEFAULT_FROM_EMAIL, [user.email])
             messages.success(request, 'Check your email to activate your account.')
             return redirect('login')
 
