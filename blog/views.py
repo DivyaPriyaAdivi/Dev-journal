@@ -150,12 +150,16 @@ def get_active_post(request, post_id):
 
 @login_required
 def set_active_post(request, pk):
-    if request.method == "POST":
-        post = get_object_or_404(Post, pk=pk, author=request.user)
-        Post.objects.filter(author=request.user, is_active=True).update(is_active=False)
-        post.is_active = not post.is_active
-        post.save()
+    if request.method != "POST":
+        return HttpResponseForbidden("Invalid request")
 
-        return JsonResponse({"success": True, "is_active": post.is_active})
+    post = get_object_or_404(Post, pk=pk, author=request.user)
 
-    return JsonResponse({"error": "Invalid request"}, status=400)
+    # Deactivate all other posts for this user
+    Post.objects.filter(author=request.user, is_active=True).exclude(pk=post.pk).update(is_active=False)
+
+    # Toggle selected post
+    post.is_active = not post.is_active
+    post.save()
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))

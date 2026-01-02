@@ -1,5 +1,5 @@
 body {
-  background: #fafafa;
+  background:#ededed;
   color: #333333;
   margin-top: 5rem;
 }
@@ -149,3 +149,9 @@ a.article-title:hover {
 .timeline-content a:hover {
   text-decoration: underline;
 }
+
+.canvasMain {
+  padding-left: 100px;
+  width: 50%;
+}
+

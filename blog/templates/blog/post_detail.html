@@ -71,7 +71,7 @@
     <!-- Right: timeline rail -->
     <aside class="md:sticky md:top-24 h-max border border-gray-200 rounded-lg p-4">
       {% if user.is_authenticated and post.author == user %}
-<form method="post" action="{% url 'set-active-post' post.id %}" id="active-post-form" class="inline-block">
+<form method="post" action="{% url 'set-active-post' post.id %}" id="active-post-form-{{ post.id }}" class="inline-block">
   {% csrf_token %}
   <h3 class="text-sm font-medium text-gray-900 mb-3">Toggle on the switch to clip related articles</h3>
   <label for="activeSwitch"
@@ -85,7 +85,7 @@
       type="checkbox"
       class="sr-only peer"
       {% if post.is_active %}checked{% endif %}
-      onchange="document.getElementById('active-post-form').submit();"
+      onchange="document.getElementById('active-post-form-{{ post.id }}').submit();"
     >
 
     <!-- Track + Thumb (monochrome) -->
