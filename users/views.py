@@ -19,6 +19,7 @@ from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+from .utils import send_brevo_email
 
 
 @api_view(['POST'])
@@ -51,9 +52,24 @@ def register(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
-            send_mail(subject, message,settings.DEFAULT_FROM_EMAIL, [user.email])
-            messages.success(request, 'Check your email to activate your account.')
-            return redirect('login')
+            email_sent = send_brevo_email(
+                subject=subject,
+                html_content=message,
+                to_email=user.email,
+            )
+
+            if email_sent:
+                messages.success(
+                    request,
+                    "Check your email to activate your account."
+                )
+            else:
+                messages.error(
+                    request,
+                    "Account created, but email could not be sent."
+                )
+
+            return redirect("login")
 
     else:
         form = UserRegisterForm()
