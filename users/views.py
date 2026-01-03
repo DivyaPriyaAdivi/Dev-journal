@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 from .utils import send_brevo_email
+from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 @api_view(['POST'])
