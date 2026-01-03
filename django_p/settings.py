@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    "anymail"
 ]
 
 MIDDLEWARE = [
@@ -182,13 +183,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 MEDIA_URL = '/media/'
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
-EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
@@ -218,3 +212,9 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000/",
     "http://localhost:8000/",
 ]
+
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
+BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL")
+
+DEFAULT_FROM_EMAIL = BREVO_SENDER_EMAIL
+
