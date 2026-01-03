@@ -1,5 +1,155 @@
-
 {% extends "blog/base.html" %}
+
 {% block content %}
-	<h1> this is about</h1>
+<div class="max-w-6xl mx-auto mt-14 px-6">
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+
+    <!-- LEFT SIDE -->
+    <div class="lg:col-span-2 space-y-16">
+
+      <!-- What is Dev Journal -->
+      <section>
+        <h1 class="text-3xl font-bold text-black mb-4">
+          What is Dev Journal?
+        </h1>
+
+        <p class="text-gray-700 leading-relaxed max-w-2xl">
+          Dev Journal is a personal developer log app where we can document programming errors,
+          debugging experiences, and solutions encountered during real-world development.
+          Instead of losing valuable learning moments, this journal preserves them as
+          structured knowledge for future reference.
+        </p>
+
+		<h1 class="text-3xl font-bold text-black mb-4">
+          current feature- #1 
+        </h1>
+
+        <p class="text-gray-700 leading-relaxed max-w-2xl mb-4">
+			When we working a particular problem, there is unavoidable cases where we face bugs and we should be glad it occurs 
+			because it is what make us learn and understand things better.so while trying to solve it , 
+			we tend to browse and look up articles , approach LLMs and reading stack overflow and reddit for solution 
+			and what if there will be situation , that you gonna face it again so instead of browsing it again we can clip those articles that helped you solve the bug
+			previously under the post that you created with title that match the bug.it will reduce the time of debugging.for that I made a clipper extension in firefox browser 
+			where you can clip the current tab of the webpage and it will save the link in the post you have selected.
+        </p>
+
+        <!-- Extension Button -->
+        <a href="/extension"
+           class="inline-block mt-6 px-6 py-3 bg-black text-white rounded-lg
+                  text-sm font-medium hover:bg-gray-900 transition">
+          Connect Extension
+        </a>
+
+		        <p class="text-gray-700 leading-relaxed max-w-2xl mb-4">
+			note(!): the extension only available in fire fox browser
+        </p>
+		<h1 class="text-3xl font-bold text-black ">
+          current feature - #2
+        </h1>
+        <p class="text-gray-700 leading-relaxed max-w-2xl">
+		 canva attached to every post object is my second feature where we can write and draw code flow by uploading code snippets using text box. it is created by kanva.js, a open source library for canva.
+        </p>
+     
+
+      <!-- Future Updates -->
+    
+        <h2 class="text-2xl font-semibold text-black mb-4">
+          Future Updates
+        </h2>
+
+        <ul class="space-y-3 text-gray-700 list-disc list-inside max-w-2xl mb-8">
+          <li>smoother pen tool for canva so that user can draw better </li>
+		  <li>user can upload code snippets as image and use pen tools to draw easily </li>
+		  <li> data structures shapes can be introduced so  we can draw it and create virtual dry run on those shapes while doing leet code</li>
+
+        </ul>
+      
+
+    </div>
+	 </section>
+    <!-- RIGHT SIDE -->
+    <aside class="space-y-10">
+
+      <!-- About Me -->
+      <section >
+        <h2 class="text-xl font-semibold text-black mb-3 border-b border-gray-200">
+          About Me
+        </h2>
+
+        <p class="text-gray-700 text-sm leading-relaxed">
+          Hii,I’m a CS graduate who recently discovered that I enjoy problem solving by breaking down things, fixing them, and learning from
+          real mistakes.So,Dev Journal is my attempt to make an app that is accountable as much as possible to the students and cs graduates like me. so if it interests you ,check it out and DM me if you like it or found any issues or any criticism and feel free to connect with me by the contacts I have given below. 
+        </p>
+      </section>
+
+      <!-- Contact Icons -->
+      <section>
+        <h2 class="text-xl font-semibold text-black mb-4">
+          Connect
+        </h2>
+
+        <div class="flex items-center gap-6">
+
+          <!-- GitHub -->
+          <a href="https://github.com/DivyaPriyaAdivi"
+             target="_blank"
+             class="text-black hover:text-gray-600 transition"
+             aria-label="GitHub">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
+              0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756
+              -1.09-.745.082-.73.082-.73 1.205.085 1.84 1.236 1.84 1.236
+              1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.76-1.605
+              -2.665-.305-5.467-1.332-5.467-5.93 0-1.31.467-2.38 1.235-3.22
+              -.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23
+              .957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404
+              2.29-1.552 3.296-1.23 3.296-1.23
+              .653 1.653.242 2.873.118 3.176.77.84 1.233 1.91 1.233 3.22
+              0 4.61-2.807 5.624-5.48 5.92.43.37.823 1.096.823 2.21
+              0 1.595-.015 2.877-.015 3.27
+              0 .32.216.694.825.576C20.565 21.796 24 17.297 24 12
+              24 5.37 18.63 0 12 0z"/>
+            </svg>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/divya-priya-b20084291"
+             target="_blank"
+             class="text-black hover:text-gray-600 transition"
+             aria-label="LinkedIn">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22.23 0H1.77C.79 0 0 .774 0 1.727v20.545C0 23.227.79 24
+              1.77 24h20.46C23.2 24 24 23.227 24 22.273V1.727
+              C24 .774 23.2 0 22.23 0zM7.09 20.452H3.56V9h3.53v11.452zM5.325
+              7.433c-1.13 0-2.05-.926-2.05-2.065
+              0-1.138.92-2.064 2.05-2.064
+              1.13 0 2.05.926 2.05 2.064
+              0 1.139-.92 2.065-2.05 2.065zM20.452
+              20.452h-3.53v-5.569c0-1.328-.027-3.037-1.852-3.037
+              -1.853 0-2.136 1.445-2.136 2.939v5.667h-3.53V9h3.39v1.561h.047
+              c.472-.9 1.624-1.85 3.341-1.85
+              3.57 0 4.23 2.35 4.23 5.41v6.331z"/>
+            </svg>
+          </a>
+
+          <!-- Email -->
+          <a href="mailto:divyapriyaanbazhagan@gmail.com"
+             class="text-black hover:text-gray-600 transition"
+             aria-label="Email">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                 viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18a2 2 0 002-2V6a2 2 0 00-2-2H3a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+          </a>
+
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+</div>
 {% endblock content %}
+
