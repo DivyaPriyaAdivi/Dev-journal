@@ -21,7 +21,7 @@ from rest_framework.authtoken.models import Token
 from django.conf import settings
 from .utils import send_brevo_email
 
-
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])  # Allow login without being authenticated
 def login_view(request):
