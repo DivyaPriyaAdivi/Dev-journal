@@ -29,11 +29,16 @@ def login_view(request):
     password = request.data.get("password")
 
     user = authenticate(username=username, password=password)
-    if user:
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key})
-    else:
-        return Response({"error": "Invalid Credentials"}, status=400)
+    if not user:
+        return Response(
+            {"error": "Invalid Credentials"},
+            status=400
+        )
+
+    Token.objects.filter(user=user).delete()
+    token = Token.objects.create(user=user)
+    return Response({"token": token.key})
+
 
 
 def register(request):
