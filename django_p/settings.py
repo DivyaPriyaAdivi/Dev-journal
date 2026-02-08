@@ -195,7 +195,7 @@ REST_FRAMEWORK = {
 
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8000",'https://dev-journal-vzt3.onrender.com','https://dev-journal-production-252c.up.railway.app/']  
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8000",'https://dev-journal-vzt3.onrender.com','https://dev-journal-production-252c.up.railway.app']  
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
