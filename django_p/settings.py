@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-x*l(he)u2gyfl)f01lz@lcok-&jvq^)3&z$1^r%cr93d*wo4ii
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','dev-journal-production-252c.up.railway.app']
 
 
 # Application definition
@@ -195,7 +195,7 @@ REST_FRAMEWORK = {
 
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8000",'https://dev-journal-vzt3.onrender.com']  
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8000",'https://dev-journal-vzt3.onrender.com','dev-journal-production-252c.up.railway.app']  
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
@@ -206,6 +206,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000/",
     "http://localhost:8000/",
     'https://dev-journal-vzt3.onrender.com/',
+    'dev-journal-production-252c.up.railway.app',
 ]
 
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")
